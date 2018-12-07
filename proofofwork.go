@@ -16,7 +16,7 @@ type ProofOfWork struct {
 }
 
 //难度值定义与推导
-const Bits = 4
+const Bits = 3
 
 func NewProofOfWork(block *Block) *ProofOfWork {
 	pow := ProofOfWork{

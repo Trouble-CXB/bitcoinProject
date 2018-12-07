@@ -1,19 +1,13 @@
 package main
 
-import (
-	"bytes"
-	"fmt"
-	"time"
-)
-
 func main() {
-	fmt.Println("Hello world!!!")
 	bc := NewBlockChain()
 	defer bc.db.Close()
-	//cli := CLI{bc}
-	//cli.Run()
+
+	cli := CLI{bc}
+	cli.Run()
 	//定义迭代器
-	it := bc.NewIterator()
+	/*it := bc.NewIterator()
 
 	for {
 		block := it.Next()
@@ -39,5 +33,5 @@ func main() {
 			fmt.Printf("区块链遍历结束!\n")
 			break
 		}
-	}
+	}*/
 }

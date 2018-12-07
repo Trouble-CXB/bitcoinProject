@@ -3,13 +3,10 @@ package main
 import (
 	"bytes"
 	"encoding/gob"
-	"fmt"
-	"log"
-	"os"
 	"time"
 )
 
-const genesisInfo = "开始学习区块链！"
+const GenesisInfo = "开始学习区块链！"
 
 //创建区块
 type Block struct {
@@ -49,21 +46,16 @@ func (block *Block) Serialize() []byte {
 	var buffer bytes.Buffer
 	encoder := gob.NewEncoder(&buffer)
 	err := encoder.Encode(block)
-	if err != nil {
-		log.Panic(err)
-	}
+	Error("编码错误：", err)
 	return buffer.Bytes()
 }
 
 //反序列化,
-func Deserialize(data []byte) *Block {
+func Deserialize(block *Block,data []byte) /**Block*/ {
 	//fmt.Printf("解码的数据： %x\n", data)
-	var block Block
+	//var block Block
 	decoder := gob.NewDecoder(bytes.NewReader(data))
 	err := decoder.Decode(&block)
-	if err != nil {
-		fmt.Println("解码错误：", err)
-		os.Exit(1)
-	}
-	return &block
+	Error("解码错误：", err)
+	//return &block
 }

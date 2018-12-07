@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
+	"os"
 )
 
 //工具文件
@@ -15,4 +17,11 @@ func UintToByte(num uint64) []byte {
 		panic(err)
 	}
 	return buffer.Bytes()
+}
+
+func Error(str string,err error)  {
+	if err!=nil {
+		fmt.Println(str,err)
+		os.Exit(1)
+	}
 }

@@ -30,11 +30,9 @@ func NewBlockChain() *BlockChain {
 		if b == nil {
 			fmt.Println("Bucket不存在，准备创建！", b)
 			b, err = tx.CreateBucket([]byte(BlockBucketName))
-			if err != nil {
-				log.Panic("tx.CreateBucket: ", err)
-			}
+			Error("tx.CreateBucket: ", err)
 			//Bucket准备完毕，开始添加创世块
-			genesisBlock := NewBlock(genesisInfo, []byte{})
+			genesisBlock := NewBlock(GenesisInfo, []byte{})
 			b.Put(genesisBlock.Hash, genesisBlock.Serialize())
 			b.Put([]byte(LastHashKey), genesisBlock.Hash)
 
@@ -74,7 +72,7 @@ type BlockChainIterator struct {
 
 //创建迭代器，使用bc初始化
 func (bc *BlockChain) NewIterator() *BlockChainIterator {
-	return &BlockChainIterator{bc.db, bc.tail}
+	return &BlockChainIterator{db: bc.db, current: bc.tail}
 }
 
 //迭代器Next方法
@@ -85,9 +83,7 @@ func (it *BlockChainIterator) Next() *Block {
 		if b == nil {
 			log.Panic("Bucket不存在，请检查！")
 		}
-
-		blockInfo := b.Get(it.current)
-		block = *Deserialize(blockInfo)
+		Deserialize(&block, b.Get(it.current))
 
 		it.current = block.PrevBlockHash
 

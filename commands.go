@@ -8,6 +8,7 @@ import (
 
 func (cli *CLI) AddBlock(data string) {
 	cli.bc.AddBlock(data)
+	fmt.Printf("添加区块成功!\n")
 }
 
 func (cli *CLI) PrintChain() {
@@ -34,7 +35,7 @@ func (cli *CLI) PrintChain() {
 		pow := NewProofOfWork(block)
 		fmt.Printf("IsValid: %v\n", pow.IsValid())
 
-		if bytes.Equal(block.PrevBlockHash, []byte{0}) {
+		if bytes.Equal(block.PrevBlockHash, []byte{}) {
 			fmt.Printf("————————————————————————————————————————————\n")
 			fmt.Printf("区块链遍历结束!\n")
 			break
